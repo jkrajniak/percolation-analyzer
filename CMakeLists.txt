@@ -35,13 +35,17 @@ add_subdirectory(${LIB_DIR})
 # Add compile scripts for own submodules
 add_subdirectory(${SRC_DIR})
 
-add_subdirectory(test/Catch2)
+# add_subdirectory(test/Catch2)
 
-add_executable(test_runner test/testing.cpp)
-target_include_directories(test_runner PUBLIC ${INCLUDE_DIR})
-target_link_libraries(test_runner PRIVATE Catch2::Catch2 percolation-analyzer-cpp)
+# add_executable(test_runner test/testing.cpp)
+# target_include_directories(test_runner PUBLIC ${INCLUDE_DIR})
+# target_link_libraries(test_runner PRIVATE Catch2::Catch2 percolation-analyzer-cpp)
 
 
 add_executable(sample_graph src/sample_graph_builder.cpp)
 target_include_directories(sample_graph PUBLIC ${INCLUDE_DIR})
 target_link_libraries(sample_graph PRIVATE molecular-graph-cpp)
+
+add_executable(pdb_graph src/pdb_graph_builder.cpp)
+target_include_directories(pdb_graph PUBLIC ${INCLUDE_DIR})
+target_link_libraries(pdb_graph PRIVATE molecular-graph-cpp pdb_reader psf_reader)

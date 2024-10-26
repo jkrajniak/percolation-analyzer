@@ -11,3 +11,11 @@ target_link_libraries(percolation-analyzer-c percolation-analyzer-cpp)
 add_library(molecular-graph-cpp molecular-graph.cpp)
 target_include_directories(molecular-graph-cpp PUBLIC ${INCLUDE_DIR})
 target_link_libraries(molecular-graph-cpp percolation-analyzer-cpp)
+
+add_library(pdb_reader pdb_reader.cpp)
+target_include_directories(pdb_reader PUBLIC ${INCLUDE_DIR})
+target_link_libraries(pdb_reader molecular-graph-cpp)
+
+add_library(psf_reader psf_reader.cpp)
+target_include_directories(psf_reader PUBLIC ${INCLUDE_DIR})
+target_link_libraries(psf_reader molecular-graph-cpp)

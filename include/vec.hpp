@@ -49,6 +49,8 @@ public:
 
     vec() : x(T()), y(T()), z(T()) {}
     vec(const vec<T> &other) : x(other.x), y(other.y), z(other.z) {}
+    vec(T x, T y, T z) : x(x), y(y), z(z) {}
+    vec(T val) : x(val), y(val), z(val) {}
 
     vec<T> &operator=(const vec<T> &other)
     {
