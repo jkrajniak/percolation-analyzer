@@ -55,7 +55,7 @@ int read_pdb(const std::string &pdb_file, mol::MolecularGraph &mol_graph)
         return 1;
     }
 
-    mol_graph.set_atom_count(atom_positions.size());
+    mol_graph.set_atom_count(atom_positions.size()+1);
     mol_graph.set_basis(basis);
 
     std::cout << "Atom count: " << atom_positions.size() << std::endl;
