@@ -12,22 +12,21 @@ int main(int argc, char *argv[])
     std::cout << "PDB graph builder" << std::endl;
 
     // Get PDB file and PSF file from command line arguments
-    if (argc != 3) {
-        std::cerr << "Usage: " << argv[0] << " <pdb_file> <psf_file>" << std::endl;
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <name_of_system>" << std::endl;
         return 1;
     }
 
-    const std::string pdb_file = argv[1];
-    const std::string psf_file = argv[2];
+    const std::string name_of_system = argv[1];
     mol::MolecularGraph mol_graph;
-    read_pdb(pdb_file, mol_graph);
+    read_pdb(name_of_system+".pdb", mol_graph);
 
-    std::vector<std::pair<int, int>> bonds = read_psf_bonds(psf_file);
+    std::vector<std::pair<int, int>> bonds = read_psf_bonds(name_of_system+".psf");
     for (const auto& bond : bonds) {
         mol_graph.add_bond(bond.first, bond.second);
     }
-    std::cout << "Read PDB file: " << pdb_file << std::endl;
-    std::cout << "Read PSF file: " << psf_file << std::endl;
+    std::cout << "Read PDB file: " << name_of_system+".pdb" << std::endl;
+    std::cout << "Read PSF file: " << name_of_system+".psf" << std::endl;
 
     std::cout << "number of bonds: " << bonds.size() << std::endl;
 
@@ -41,6 +40,20 @@ int main(int argc, char *argv[])
     // Let us output the percolation info
     std::cout << "Results of the percolation analysis:" << std::endl;
     std::cout << "The system has a total of " << percolation_data.size() << " disjoint molecules" << std::endl;
+    
+    // Find the largest molecule
+    size_t largest_molecule_index = 0;
+    size_t largest_molecule_size = percolation_data[0].vertices.size();
+    for (size_t c_index = 1; c_index < percolation_data.size(); c_index++) {
+        if (percolation_data[c_index].vertices.size() > largest_molecule_size) {
+            largest_molecule_index = c_index;
+            largest_molecule_size = percolation_data[c_index].vertices.size();
+        }
+    }
+
+    std::cout << "Largest molecule index: " << largest_molecule_index << std::endl;
+    std::cout << "Largest molecule size: " << largest_molecule_size << std::endl;
+    std::cout << "Largest molecule percolation dimension: " << percolation_data[largest_molecule_index].percolation_dim << std::endl;
 
     return 0;
 }
